@@ -129,7 +129,7 @@ cd telecom-churn-prediction
 pip install -r requirements.txt
 ```
 ### 2. Running Inference in Python
-
+```
 import pandas as pd
 from src.inference_pipeline import ChurnPredictorPipeline
 
@@ -146,7 +146,7 @@ raw_input = pd.DataFrame([{
     "InternetService": "Fiber optic",
     "PaymentMethod": "Electronic check"
 }])
-
+```
 # Get predictions
 results = pipeline.predict(raw_input, threshold=0.40)
 print(results)
