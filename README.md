@@ -1,4 +1,4 @@
-# Telecom Customer Churn Prediction: Technical Project Report
+# Customer Churn Forecasting Project
 
 ## 1. Executive Summary
 This project delivers an end-to-end Machine Learning pipeline to predict customer churn in a telecommunications dataset. By processing raw customer profiles through domain-specific feature engineering and benchmarking seven distinct classification architectures, the finalized model achieves a **Tuned ROC-AUC of 0.8462** and a **Churn Recall of 0.78 (78%)**. The pipeline is packaged into a production-ready deployment class (`ChurnPredictorPipeline`) using serialized `joblib` artifacts.
