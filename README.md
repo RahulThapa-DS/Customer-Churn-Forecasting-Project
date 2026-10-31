@@ -75,3 +75,55 @@ To capture complex customer behaviors, domain-specific continuous and categorica
 | **`charge_diff_from_avg`** | $\text{MonthlyCharges} - \text{avg\_monthly\_spend}$ | Detects recent price increases or plan upgrades relative to baseline. |
 | **`total_addons_count`** | $\sum \mathbb{I}(\text{Service Addon} == \text{'Yes'})$ | Quantifies product adoption and overall platform stickiness. |
 | **`is_long_term_contract`** | $\mathbb{I}(\text{Contract} \in [\text{'One year'}, \text{'Two year'}])$ | Encodes contractual retention commitments. |
+
+---
+
+## 📈 Model Benchmarking & Tuning
+
+Seven machine learning models were trained and evaluated using identical **80/20 stratified train-test splits**:
+
+| Model Algorithm | Accuracy | Precision | Recall | F1-Score | ROC-AUC |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Logistic Regression** 🏆 | **0.7445** | **0.5122** | **0.7861** | **0.6203** | **0.8476** |
+| **CatBoost** | 0.7672 | 0.5444 | 0.7540 | 0.6323 | 0.8380 |
+| **Neural Network (MLP)** | 0.7949 | 0.6239 | 0.5722 | 0.5969 | 0.8365 |
+| **LightGBM** | 0.7509 | 0.5216 | 0.7433 | 0.6130 | 0.8316 |
+| **Support Vector Machine (SVM)** | 0.7587 | 0.5306 | 0.7888 | 0.6344 | 0.8289 |
+| **Random Forest** | 0.7878 | 0.6335 | 0.4759 | 0.5435 | 0.8259 |
+| **XGBoost** | 0.7708 | 0.5586 | 0.6497 | 0.6007 | 0.8255 |
+
+### Selected Model & Hyperparameter Optimization
+**Logistic Regression** achieved the highest baseline ROC-AUC (0.8476). Applying 5-fold cross-validated `GridSearchCV` optimized regularization parameters:
+- **Best Parameters:** `{'C': 10.0, 'solver': 'lbfgs'}`
+- **Final Tuned ROC-AUC:** **`0.8462`**
+
+---
+
+## 🎯 Metrics Justification & Business Insights
+
+### Why Prioritize Recall?
+In churn prediction, **False Negatives** (failing to identify a churning customer) result in total loss of Customer Lifetime Value (CLV). **False Positives** (sending a discount offer to a loyal customer) carry only minor promotional costs. Thus, the model prioritizes **Recall (78%)** by setting an optimal decision threshold at **$0.40$**.
+
+### Top Churn Risk Drivers
+- **Month-to-Month Contracts:** Strongest indicator of short-term cancellation risk.
+- **Fiber Optic Service without Add-ons:** High monthly costs coupled with lack of security/tech support drives churn.
+- **Recent Bill Price Surges (`charge_diff_from_avg`):** Price jumps relative to historical averages trigger billing friction.
+- **Electronic Check Payments:** Manual payment methods lack automatic renewals and encourage monthly re-evaluation.
+
+### Recommended Retention Actions
+- **Contract Migration:** Offer small bill credits ($5–$10) to month-to-month users who transition to 1-year plans.
+- **Onboarding Assistance:** Implement automated check-ins during the critical 0–3 month onboarding window (`onboarding` cohort).
+- **Auto-Pay Incentives:** Provide a one-time account credit for users adopting automated credit card/bank payments.
+
+---
+
+## 🚀 Quickstart & Usage
+
+### 1. Installation
+```bash
+# Clone repository
+git clone [https://github.com/YourUsername/telecom-churn-prediction.git](https://github.com/YourUsername/telecom-churn-prediction.git)
+cd telecom-churn-prediction
+```
+# Install requirements
+pip install -r requirements.txt
