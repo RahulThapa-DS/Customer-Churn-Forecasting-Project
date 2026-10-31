@@ -44,7 +44,7 @@ telecom-churn-prediction/
 ├── README.md                   # Technical project documentation
 └── requirements.txt            # System dependencies
 ---
-
+```
 ## 2. Dataset Overview & Preprocessing Pipeline
 
 ### 2.1 Dataset Profile
@@ -110,9 +110,3 @@ Seven algorithms were evaluated under identical 80/20 stratified train-test spli
 3. **F1-Score:** Balances Precision and Recall to ensure campaign spending efficiency.
 
 ---
-
-## 6. Model Persistence & Production Deployment
-The full pipeline is packaged into `ChurnPredictorPipeline` in `src/inference_pipeline.py`. Model state and preprocessors are saved under `artifacts/`:
-- `churn_model.pkl`: Hyperparameter-tuned Logistic Regression model.
-- `scaler.pkl`: Fitted `StandardScaler` instance.
-- `feature_names.pkl`: Ordered feature column list ensuring seamless input validation.
