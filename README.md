@@ -124,6 +124,32 @@ In churn prediction, **False Negatives** (failing to identify a churning custome
 # Clone repository
 git clone [https://github.com/YourUsername/telecom-churn-prediction.git](https://github.com/YourUsername/telecom-churn-prediction.git)
 cd telecom-churn-prediction
-```
+
 # Install requirements
 pip install -r requirements.txt
+```
+### 2. Running Inference in Python
+
+import pandas as pd
+from src.inference_pipeline import ChurnPredictorPipeline
+
+# Load production wrapper
+pipeline = ChurnPredictorPipeline(artifacts_dir="artifacts")
+
+# Pass raw customer dictionary / DataFrame
+raw_input = pd.DataFrame([{
+    "customerID": "1234-XYZ",
+    "tenure": 2,
+    "MonthlyCharges": 85.50,
+    "TotalCharges": "171.00",
+    "Contract": "Month-to-month",
+    "InternetService": "Fiber optic",
+    "PaymentMethod": "Electronic check"
+}])
+
+# Get predictions
+results = pipeline.predict(raw_input, threshold=0.40)
+print(results)
+# Output:
+#  churn_probability  churn_prediction risk_level
+#             0.8250                 1  High Risk
