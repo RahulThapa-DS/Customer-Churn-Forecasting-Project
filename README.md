@@ -146,10 +146,11 @@ raw_input = pd.DataFrame([{
     "InternetService": "Fiber optic",
     "PaymentMethod": "Electronic check"
 }])
-```
+
 # Get predictions
 results = pipeline.predict(raw_input, threshold=0.40)
 print(results)
 # Output:
 #  churn_probability  churn_prediction risk_level
 #             0.8250                 1  High Risk
+```
